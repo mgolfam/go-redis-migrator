@@ -1,21 +1,27 @@
-# Variables
-GO_BIN=go
-APP_NAME=redis-migrator
-SRC_DIR=./src
+# Define output directory
+BINDIR = ./bin
+SRC = ./src
+BINARY = $(BINDIR)/redis-migrator
 
-# Default target
-all: build
+# Ensure bin directory exists
+$(BINDIR): build
+	mkdir -p $(BINDIR)
 
-# Build the project
-build:
-	$(GO_BIN) build -o $(APP_NAME) $(SRC_DIR)/main.go
+# Build the binary
+build: 
+	go build -o $(BINARY) $(SRC)/main.go
 
-# Run the project
-run:
-	$(GO_BIN) run $(SRC_DIR)/main.go
-
-# Clean build artifacts
+# Clean the build
 clean:
-	rm -f $(APP_NAME)
+	rm -rf $(BINDIR)
 
-.PHONY: all build run clean
+# Run the binary
+run: build
+	$(BINARY)
+
+# Install dependencies
+deps:
+	go mod tidy
+	go mod download
+
+.PHONY: build clean run deps
