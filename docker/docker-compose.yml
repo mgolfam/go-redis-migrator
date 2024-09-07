@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  redis-source:
+    build:
+      context: ./redis-source
+    container_name: redis_source
+    ports:
+      - "6382:6379"
+    environment:
+      - REDIS_DATABASE=1
+    volumes:
+      - ./redis_source_data:/data
+
+  redis-destination:
+    image: redis:latest
+    container_name: redis_destination
+    ports:
+      - "6383:6379"
+    environment:
+      - REDIS_DATABASE=2
+    volumes:
+      - ./redis_destination_data:/data

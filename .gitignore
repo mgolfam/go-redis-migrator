@@ -28,3 +28,6 @@ _testmain.go
 
 bin
 bin/
+
+redis_destination_data
+redis_source_data
