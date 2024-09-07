@@ -1,12 +1,21 @@
-.Phony: all
+# Variables
+GO_BIN=go
+APP_NAME=redis-migrator
+SRC_DIR=./src
 
-SHELL := /bin/bash # Use bash syntax
+# Default target
+all: build
 
+# Build the project
 build:
-	go build -v -o out/
+	$(GO_BIN) build -o $(APP_NAME) $(SRC_DIR)/main.go
 
-build-mac:
-	GOOS=darwin GOARCH=amd64 go build -v -o out/
+# Run the project
+run:
+	$(GO_BIN) run $(SRC_DIR)/main.go
 
-build-linux:
-	GOOS=linux GOARCH=amd64 go build -v -o out/
+# Clean build artifacts
+clean:
+	rm -f $(APP_NAME)
+
+.PHONY: all build run clean
